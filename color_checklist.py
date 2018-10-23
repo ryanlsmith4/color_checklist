@@ -1,9 +1,20 @@
-from colorama import init
+#   This import is for the color effects
+from colorama import init, Fore, Back, Style
+# This import allows us to clear the terminal
+from os import system, name
+
 init()
-from colorama import Fore, Back, Style
 
 check_list = []
-print("Create a CheckList of Things you want to Remember and then mark them off once completed!")
+# Clear method uses import os
+#this checks Operating system then clears the terminal
+def clear():
+    if name == 'nt':
+        _ = system('cls')
+    else:
+        _ = system('clear')
+
+# print("Create a CheckList of Things you want to Remember and then mark them off once completed!")
 def create(item):
     check_list.append(item)
     return check_list
@@ -19,22 +30,23 @@ def update(index, item):
 
 def destroy(index):
     check_list.pop(index)
-
+# list all items in list Start
 def list_all_items():
     index = 0
     if len(check_list) == 0:
         print("List is Empty")
     else:
+        # for loop need to be started at 0
         for list_item in check_list:
-            print(Fore.BLACK + Back.YELLOW + ("{} {}".format(index, list_item)))
+            print(Fore.WHITE + Back.MAGENTA + ("{} {}".format(index, list_item)))
             # print(str(index+1)+ " " + list_item)
             index += 1
 
-# function will uncheck the checklist after checklist is checkedtouch 
+# function will uncheck the checklist after checklist is checkedtouch
 def un_mark(index):
     try:
-        check_list[int(index)].replace("√", " ")
-        print(list_all_items())
+        check_list[int(index)] = check_list[int(index)].replace("√", "")
+        list_all_items()
     except:
         print("not checked")
 # method to insert √ on check List
@@ -104,5 +116,7 @@ def test():
 
 running = True
 while running:
-    selection = user_input("Press C to add to list, R to Read from list, P to display list, U to un-mark and Q to quit or M check mark: ")
-    running = select(selection.upper())
+        print("Create a CheckList of Things you want to Remember and then mark them off once completed!")
+        selection = user_input("Press C to add to list, R to Read from list, P to display list, U to un-mark and Q to quit or M check mark: ")
+        clear()
+        running = select(selection.upper())
